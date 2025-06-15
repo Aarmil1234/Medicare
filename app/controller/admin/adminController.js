@@ -172,6 +172,8 @@ const addHospital = async (req, res) => {
 
         // image store
         for (let m = 0; m < images.length; m++) {
+            // console.log("images[m]['filename']",images[m]['filename']);
+            
             await mediaModel.create({ image: `admin/profiles/` + images[m]['filename'], type: 'HOSPITAL', typeId: newHospital['_id'] });
         }
 
@@ -479,7 +481,7 @@ const getDoctors = async (req, res) => {
 // }
 
 
-// add appointment
+// add appointment Add apoointment ma kai ch? v1 ke v2?e men kem khbr hoi  e chomu jevo junu collection lai ne bethoch
 const addAppointment = async (req, res) => {
     let userId = req.body.userId;
     let mobilenumber = req.body.mobilenumber;
@@ -937,7 +939,7 @@ const deleteAppointment = async (req, res) => {
 
 const getAppointmentsWithDetails = async (req, res) => {
     try {
-        const { appointmentId } = req.query;
+        const { appointmentId, dateFilter } = req.query;
 
         // Get start of today (00:00:00) as string
         const startOfToday = moment().format('YYYY-MM-DD');
@@ -947,6 +949,20 @@ const getAppointmentsWithDetails = async (req, res) => {
         };
         if (appointmentId) {
             appointmentFilter._id = appointmentId;
+        }
+
+        if (dateFilter === 'today') {
+            const start = moment().startOf('day').toDate();
+            const end = moment().endOf('day').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        } else if (dateFilter === 'week') {
+            const start = moment().startOf('week').toDate();
+            const end = moment().endOf('week').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        } else if (dateFilter === 'month') {
+            const start = moment().startOf('month').toDate();
+            const end = moment().endOf('month').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
         }
 
         // Fetch appointmentDetails with populated appointment
