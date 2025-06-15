@@ -963,9 +963,13 @@ const getAppointmentsWithDetails = async (req, res) => {
             const start = moment().startOf('month').toDate();
             const end = moment().endOf('month').toDate();
             appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        } else if (dateFilter === 'lastMonth') {
+            const start = moment().subtract(1, 'month').startOf('month').toDate();
+            const end = moment().subtract(1, 'month').endOf('month').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
         }
 
-        // Fetch appointmentDetails with populated appointment
+
         const { data: appointmentDetails } = await selectdatawithjoin({
             Model: appointmentdetailModel,
             condition: appointmentFilter,
