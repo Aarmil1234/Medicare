@@ -173,7 +173,7 @@ const addHospital = async (req, res) => {
         // image store
         for (let m = 0; m < images.length; m++) {
             // console.log("images[m]['filename']",images[m]['filename']);
-            
+
             await mediaModel.create({ image: `admin/profiles/` + images[m]['filename'], type: 'HOSPITAL', typeId: newHospital['_id'] });
         }
 
@@ -939,7 +939,7 @@ const deleteAppointment = async (req, res) => {
 
 const getAppointmentsWithDetails = async (req, res) => {
     try {
-        const { appointmentId, dateFilter } = req.query;
+        const { appointmentId, dateFilter } = req.body;
 
         // Get start of today (00:00:00) as string
         const startOfToday = moment().format('YYYY-MM-DD');
