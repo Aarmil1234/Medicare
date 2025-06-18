@@ -174,7 +174,10 @@ const addHospital = async (req, res) => {
         for (let m = 0; m < images.length; m++) {
             // console.log("images[m]['filename']",images[m]['filename']);
 
-            await mediaModel.create({ image: `admin/profiles/` + images[m]['filename'], type: 'HOSPITAL', typeId: newHospital['_id'] });
+            // let imagess = await mediaModel.create({ image: `admin/profiles/` + images[m]['filename'], type: 'HOSPITAL', typeId: newHospital['_id'] });
+            await mediaModel.create({ image: images[m]['path'], type: 'HOSPITAL', typeId: newHospital['_id'] });
+            
+
         }
 
         for (let c = 0; c < contentJson.length; c++) {
