@@ -57,6 +57,10 @@ router.post('/addeditsetting', adminController.addeditSetting); // corrected the
 router.post('/getsettings', adminController.getSettings); // corrected the route to lowercase
 router.post('/updateappointmenttimebytype', adminController.updateAppointmentTimeByType); // corrected the route to lowercase
 router.post('/editappointmentdetails', adminController.editAppointmentDetails); // corrected the route to lowercase
+<<<<<<< HEAD
+=======
+router.patch('/editAppointmentDetailsV2', uploadProfile.fields([{ name: 'labReportFile' }]), validate(adminValidation.editAppointmentDetails), adminController.editAppointmentDetailsV2); // corrected the route to lowercase
+>>>>>>> 1770808 (last Branch Update)
 
 router.post('/adddoctor', adminController.addDoctor);
 router.post('/getdoctors', adminController.getDoctors);
