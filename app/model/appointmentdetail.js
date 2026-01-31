@@ -7,12 +7,28 @@ const appointmentdetailSchema = new mongoose.Schema({
     appointmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'appointment', required: false },
     // diseaseId: { type: mongoose.Schema.Types.ObjectId, ref: 'disease', required: false },
 
+<<<<<<< HEAD
+=======
+    chiefComplaints: { type: String, required: false, default: "" },
+    probableDiagnosis: { type: String, required: false, default: "" },
+    prescriptionList: { type: String, required: false, default: "" },
+    labInvestigations: { type: String, required: false, default: "" },
+    labReports: { type: String, required: false, default: "" },
+    doctorRemarks: { type: String, required: false, default: "" },
+    nextAppointmentDate: { type: Date, required: false, default: "" },
+    status: { type: String, required: false, enum: ["Ongoing", "Completed"], default: "Ongoing" },
+
+>>>>>>> 1770808 (last Branch Update)
     duration: { type: String, required: false },
     appointmentDate: { type: Date, required: false },
     appointmentTime: { type: String, required: false },
     inTime: { type: String, required: false },
     outTime: { type: String, required: false },
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1770808 (last Branch Update)
     disease: { type: String, required: false },
     isEmergency: { type: Boolean, default: false },
 

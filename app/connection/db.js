@@ -6,7 +6,10 @@ const uri = 'mongodb+srv://snselftech:rDa9TicNjJJVCZcD@selftech.7ie4n.mongodb.ne
 
 // const uri = 'mongodb://localhost:27017/medicare'; // or your remote URI
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1770808 (last Branch Update)
 async function connectToMongo() {
     try {
         await mongoose.connect(uri, {
@@ -15,7 +18,11 @@ async function connectToMongo() {
         });
         console.log('Connected to MongoDB using Mongoose');
     } catch (error) {
+<<<<<<< HEAD
         consoleapp/connection/db.js.error('Failed to connect to MongoDB', error);
+=======
+        console.error('Failed to connect to MongoDB', error);
+>>>>>>> 1770808 (last Branch Update)
         process.exit(1); // Exit process with failure if unable to connect
     }
 }

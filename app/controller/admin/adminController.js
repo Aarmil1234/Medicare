@@ -172,7 +172,16 @@ const addHospital = async (req, res) => {
 
         // image store
         for (let m = 0; m < images.length; m++) {
-            await mediaModel.create({ image: `admin/profiles/` + images[m]['filename'], type: 'HOSPITAL', typeId: newHospital['_id'] });
+            // console.log("images[m]['filename']",images[m]['filename']);
+
+            // let imagess = await mediaModel.create({ image: `admin/profiles/` + images[m]['filename'], type: 'HOSPITAL', typeId: newHospital['_id'] });
+            await mediaModel.create({ image: images[m]['path'], type: 'HOSPITAL', typeId: newHospital['_id'] });
+<<<<<<< HEAD
+            
+=======
+
+>>>>>>> 1770808 (last Branch Update)
+
         }
 
         for (let c = 0; c < contentJson.length; c++) {
@@ -478,8 +487,12 @@ const getDoctors = async (req, res) => {
 //     }
 // }
 
+<<<<<<< HEAD
 
-// add appointment
+// add appointment Add apoointment ma kai ch? v1 ke v2?e men kem khbr hoi  e chomu jevo junu collection lai ne bethoch
+=======
+// add appointment Add apoointment
+>>>>>>> 1770808 (last Branch Update)
 const addAppointment = async (req, res) => {
     let userId = req.body.userId;
     let mobilenumber = req.body.mobilenumber;
@@ -493,6 +506,17 @@ const addAppointment = async (req, res) => {
     let appointmentTime = req.body.appointmentTime || "";
     let isEmergency = req.body.isEmergency || false;
 
+<<<<<<< HEAD
+=======
+    // let appointmentId = req.body.appointmentId;
+    // let chiefComplaints = req.body.chiefComplaints || "";
+    // let probableDiagnosis = req.body.probableDiagnosis || "";
+    // let prescriptionList = req.body.prescriptionList || "";
+    // let labInvestigations = req.body.labInvestigations || "";
+    // let labReports = req.body.labReports || "";
+    // let doctorRemarks = req.body.doctorRemarks || "";
+
+>>>>>>> 1770808 (last Branch Update)
     try {
         // Validation
         if (!fullName) {
@@ -510,7 +534,10 @@ const addAppointment = async (req, res) => {
             return errorResponse(res, 'Invalid date format. Please use YYYY-MM-DD.');
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1770808 (last Branch Update)
         let durationData = await selectdatv2(settingModel, { key: "Duration" }, "value");
 
         let checkMobileNumber = await userModel.findOne({ mobileNumber: mobilenumber, delete: false });
@@ -575,6 +602,104 @@ const addAppointment = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
+=======
+// const addAppointment = async (req, res) => {
+//     let appointmentId = req.body.appointmentId;
+//     let userId = req.body.userId;
+//     let mobilenumber = req.body.mobilenumber;
+//     let fullName = req.body.fullName || "";
+//     let doctorId = req.body.doctorId || "";
+//     let hospitalId = req.body.hospitalId;
+//     let appointmentuserId = req.body.appointmentuserId || "";
+//     let duration = req.body.duration || "";
+//     let disease = req.body.disease || "";
+//     let appointmentDate = req.body.appointmentDate || "";
+//     let appointmentTime = req.body.appointmentTime || "";
+//     let isEmergency = req.body.isEmergency || false;
+
+//     let chiefComplaints = req.body.chiefComplaints || "";
+//     let probableDiagnosis = req.body.probableDiagnosis || "";
+//     let prescriptionList = req.body.prescriptionList || "";
+//     let labInvestigations = req.body.labInvestigations || "";
+//     let labReports = req.body.labReports || "";
+//     let doctorRemarks = req.body.doctorRemarks || "";
+
+//     try {
+//         if (!fullName) return errorResponse(res, 'Full name is required');
+//         if (!mobilenumber) return errorResponse(res, 'Mobile number is required');
+//         if (!appointmentDate) return errorResponse(res, 'Appointment date is required');
+//         if (!/^\d{4}-\d{2}-\d{2}$/.test(appointmentDate)) {
+//             return errorResponse(res, 'Invalid date format. Please use YYYY-MM-DD.');
+//         }
+
+//         let durationData = await selectdatv2(settingModel, { key: "Duration" }, "value");
+
+//         let checkMobileNumber = await userModel.findOne({ mobileNumber: mobilenumber, delete: false });
+//         if (!checkMobileNumber) {
+//             let user = await saveModel(userModel, { fullName, mobileNumber: mobilenumber });
+//             userId = user._id;
+//         } else {
+//             userId = checkMobileNumber._id;
+//         }
+
+//         let checkDoc = await doctorModel.find({ delete: false, _id: doctorId, isAvailable: false });
+//         if (checkDoc.length < 0) return errorResponse(res, 'Doctor is Not Available');
+
+//         const appointmentData = {
+//             userId,
+//             mobileNumber: mobilenumber,
+//             fullName,
+//             hospitalId,
+//             doctorId,
+//             update: new Date()
+//         };
+
+//         const appointmentDetailData = {
+//             userId,
+//             disease,
+//             duration: durationData.data[0]?.value || "",
+//             appointmentTime,
+//             appointmentDate,
+//             isEmergency,
+//             update: new Date()
+//         };
+
+//         if (appointmentuserId) {
+//             appointmentDetailData.appointmentuserId = appointmentuserId;
+//         }
+
+//         if (appointmentId && appointmentId !== "0") {
+//             // Update existing appointment
+//             const updated = await appointmentModel.findByIdAndUpdate(appointmentId, appointmentData, { new: true });
+//             if (!updated) return errorResponse(res, 'Appointment not found or update failed');
+
+//             await appointmentdetailModel.findOneAndUpdate(
+//                 { appointmentId },
+//                 appointmentDetailData,
+//                 { upsert: true, new: true }
+//             );
+
+//             return successResponse(res, 'Appointment updated successfully', []);
+//         } else {
+//             // Create new appointment
+//             appointmentData.create = new Date();
+//             const savedAppointment = await saveModel(appointmentModel, appointmentData);
+//             if (!savedAppointment) return errorResponse(res, 'Error creating appointment');
+
+//             appointmentDetailData.create = new Date();
+//             appointmentDetailData.appointmentId = savedAppointment._id;
+//             await saveModel(appointmentdetailModel, appointmentDetailData);
+
+//             return successResponse(res, 'Appointment created successfully', []);
+//         }
+//     } catch (error) {
+//         console.error('Error adding/updating appointment:', error);
+//         return errorResponse(res, 'Error adding or updating appointment');
+//     }
+// };
+
+>>>>>>> 1770808 (last Branch Update)
 // const addAppointmentV2 = async (req, res) => {
 //     let {
 //         userId,
@@ -935,9 +1060,10 @@ const deleteAppointment = async (req, res) => {
 //     }
 // };
 
+<<<<<<< HEAD
 const getAppointmentsWithDetails = async (req, res) => {
     try {
-        const { appointmentId } = req.query;
+        const { appointmentId, dateFilter } = req.body;
 
         // Get start of today (00:00:00) as string
         const startOfToday = moment().format('YYYY-MM-DD');
@@ -945,11 +1071,140 @@ const getAppointmentsWithDetails = async (req, res) => {
             delete: false,
             // appointmentDate: { $gte: startOfToday } // string comparison works for YYYY-MM-DD
         };
+=======
+// const getAppointmentsWithDetails = async (req, res) => {
+//     try {
+//         const { appointmentId, dateFilter } = req.body;
+
+//         // Get start of today (00:00:00) as string
+//         const startOfToday = moment().format('YYYY-MM-DD');
+//         let appointmentFilter = {
+//             delete: false,
+//             // appointmentDate: { $gte: startOfToday } // string comparison works for YYYY-MM-DD
+//         };
+//         if (appointmentId) {
+//             appointmentFilter._id = appointmentId;
+//         }
+
+//         if (dateFilter === 'today') {
+//             const start = moment().startOf('day').toDate();
+//             const end = moment().endOf('day').toDate();
+//             appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+//         } else if (dateFilter === 'week') {
+//             const start = moment().startOf('week').toDate();
+//             const end = moment().endOf('week').toDate();
+//             appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+//         } else if (dateFilter === 'month') {
+//             const start = moment().startOf('month').toDate();
+//             const end = moment().endOf('month').toDate();
+//             appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+//         } else if (dateFilter === 'lastMonth') {
+//             const start = moment().subtract(1, 'month').startOf('month').toDate();
+//             const end = moment().subtract(1, 'month').endOf('month').toDate();
+//             appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+//         }
+
+
+//         const { data: appointmentDetails } = await selectdatawithjoin({
+//             Model: appointmentdetailModel,
+//             condition: appointmentFilter,
+//             limit: 100,
+//             offset: 0,
+//             joinModel: [
+//                 {
+//                     path: 'appointmentId',
+//                     select: 'amount payableAmount create userId doctorId hospitalId mobileNumber fullName',
+//                     populate: [
+//                         { path: 'userId', select: 'fullName email mobileNumber gender' },
+//                         { path: 'doctorId', select: 'name email mobileNumber specializationId degreeId hospitalId appointmentCharge experience' },
+//                         { path: 'hospitalId', select: 'name email mobileNumber address' }
+//                     ]
+//                 }
+//             ],
+//             fields: "duration appointmentTime appointmentDate inTime outTime disease isEmergency chiefComplaints probableDiagnosis prescriptionList labInvestigations labReports doctorRemarks nextAppointmentDate status delete",
+//             sortBy: { '_id': -1 },
+//         });
+
+//         if (appointmentDetails.length === 0) {
+//             return res.status(200).json({
+//                 success: true,
+//                 message: 'Appointments fetched successfully',
+//                 data: []
+//             });
+//         }
+
+
+//         // Group by appointmentId
+//         const groupedAppointments = {};
+//         appointmentDetails.forEach(detail => {
+//             const appointment = detail.appointmentId?._id?.toString();
+//             if (!appointment) return;
+//             if (!groupedAppointments[appointment]) {
+//                 groupedAppointments[appointment] = {
+//                     ...((detail.appointmentId && typeof detail.appointmentId.toObject === 'function') ? detail.appointmentId.toObject() : detail.appointmentId) || {},
+//                     appointmentDetails: []
+//                 };
+//             }
+//             groupedAppointments[appointment].appointmentDetails.push({
+//                 ...detail,
+//                 appointmentId: undefined
+//             });
+//         });
+
+//         const result = Object.values(groupedAppointments);
+
+//         return res.status(200).json({
+//             success: true,
+//             message: 'Appointments fetched successfully',
+//             data: result
+//         });
+
+//     } catch (error) {
+//         console.error('Error fetching appointments:', error);
+//         return res.status(500).json({
+//             success: false,
+//             message: 'Something went wrong while fetching appointments'
+//         });
+//     }
+// };
+
+const getAppointmentsWithDetails = async (req, res) => {
+    try {
+        const { appointmentId, dateFilter, status } = req.body;
+
+        let appointmentFilter = { delete: false };
+
+        if (status && ['Ongoing', 'Completed'].includes(status)) {
+            appointmentFilter.status = status;
+        }
+
+>>>>>>> 1770808 (last Branch Update)
         if (appointmentId) {
             appointmentFilter._id = appointmentId;
         }
 
-        // Fetch appointmentDetails with populated appointment
+        if (dateFilter === 'today') {
+            const start = moment().startOf('day').toDate();
+            const end = moment().endOf('day').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        } else if (dateFilter === 'week') {
+            const start = moment().startOf('week').toDate();
+            const end = moment().endOf('week').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        } else if (dateFilter === 'month') {
+            const start = moment().startOf('month').toDate();
+            const end = moment().endOf('month').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        } else if (dateFilter === 'lastMonth') {
+            const start = moment().subtract(1, 'month').startOf('month').toDate();
+            const end = moment().subtract(1, 'month').endOf('month').toDate();
+            appointmentFilter.appointmentDate = { $gte: start, $lte: end };
+        }
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1770808 (last Branch Update)
         const { data: appointmentDetails } = await selectdatawithjoin({
             Model: appointmentdetailModel,
             condition: appointmentFilter,
@@ -966,7 +1221,11 @@ const getAppointmentsWithDetails = async (req, res) => {
                     ]
                 }
             ],
+<<<<<<< HEAD
             fields: "duration appointmentTime appointmentDate inTime outTime disease isEmergency delete",
+=======
+            fields: "duration appointmentTime appointmentDate inTime outTime disease isEmergency chiefComplaints probableDiagnosis prescriptionList labInvestigations labReports doctorRemarks nextAppointmentDate status delete",
+>>>>>>> 1770808 (last Branch Update)
             sortBy: { '_id': -1 },
         });
 
@@ -978,11 +1237,36 @@ const getAppointmentsWithDetails = async (req, res) => {
             });
         }
 
+<<<<<<< HEAD
+=======
+        // Add missing fields manually
+        const ensureDefaultFields = (detail) => ({
+            _id: detail._id,
+            duration: detail.duration ?? "",
+            appointmentTime: detail.appointmentTime ?? "",
+            appointmentDate: detail.appointmentDate ?? "",
+            inTime: detail.inTime ?? "",
+            outTime: detail.outTime ?? "",
+            disease: detail.disease ?? "",
+            isEmergency: detail.isEmergency ?? false,
+            chiefComplaints: detail.chiefComplaints ?? "",
+            probableDiagnosis: detail.probableDiagnosis ?? "",
+            prescriptionList: detail.prescriptionList ?? "",
+            labInvestigations: detail.labInvestigations ?? "",
+            labReports: detail.labReports ?? "",
+            doctorRemarks: detail.doctorRemarks ?? "",
+            nextAppointmentDate: detail.nextAppointmentDate ?? "",
+            status: detail.status ?? "Ongoing",
+            delete: detail.delete ?? false
+        });
+
+>>>>>>> 1770808 (last Branch Update)
         // Group by appointmentId
         const groupedAppointments = {};
         appointmentDetails.forEach(detail => {
             const appointment = detail.appointmentId?._id?.toString();
             if (!appointment) return;
+<<<<<<< HEAD
             if (!groupedAppointments[appointment]) {
                 groupedAppointments[appointment] = {
                     ...((detail.appointmentId && typeof detail.appointmentId.toObject === 'function') ? detail.appointmentId.toObject() : detail.appointmentId) || {},
@@ -992,6 +1276,21 @@ const getAppointmentsWithDetails = async (req, res) => {
             groupedAppointments[appointment].appointmentDetails.push({
                 ...detail,
                 appointmentId: undefined
+=======
+
+            if (!groupedAppointments[appointment]) {
+                groupedAppointments[appointment] = {
+                    ...((detail.appointmentId && typeof detail.appointmentId.toObject === 'function')
+                        ? detail.appointmentId.toObject()
+                        : detail.appointmentId),
+                    appointmentDetails: []
+                };
+            }
+
+            groupedAppointments[appointment].appointmentDetails.push({
+                ...ensureDefaultFields(detail),
+                appointmentId: undefined // to avoid redundancy
+>>>>>>> 1770808 (last Branch Update)
             });
         });
 
@@ -1012,6 +1311,10 @@ const getAppointmentsWithDetails = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1770808 (last Branch Update)
 const getAppointmentsData = async (req, res) => {
     try {
         const { appointmentId, limit = 10, offset = 0 } = req.query;
@@ -1188,6 +1491,10 @@ const updateAppointmentTimeByType = async (req, res) => {
             updateFields.inTime = finalTime;
         } else if (type === 'out') {
             updateFields.outTime = finalTime;
+<<<<<<< HEAD
+=======
+            updateFields.status = "Completed";
+>>>>>>> 1770808 (last Branch Update)
         }
 
         // Update the record
@@ -1277,8 +1584,11 @@ const editAppointmentDetails = async (req, res) => {
             return errorResponse(res, 'Appointment detail not found');
         }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 1770808 (last Branch Update)
         // Update the record
         const updatedDetail = await appointmentdetailModel.findByIdAndUpdate(
             appointmentDetail._id,
@@ -1306,6 +1616,78 @@ const editAppointmentDetails = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
+=======
+// edit appointment Details
+const editAppointmentDetailsV2 = async (req, res) => {
+    try {
+        const {
+            appointmentId,
+            // appointmentDate,
+            // appointmentTime,
+            // inTime,
+            // outTime,
+            // disease,
+            // isEmergency,
+
+            chiefComplaints,
+            probableDiagnosis,
+            prescriptionList,
+            labInvestigations,
+            labReports,
+            doctorRemarks,
+            nextAppointmentDate
+
+        } = req.body;
+
+        const labReportFile = req.file || null;
+
+        if (!appointmentId) {
+            return res.status(400).json({
+                success: false,
+                message: 'appointmentId is required'
+            });
+        }
+
+        // Find the appointmentDetail
+        const appointmentDetail = await appointmentdetailModel.findOne({
+            delete: false,
+            appointmentId: appointmentId
+        });
+
+        if (!appointmentDetail) {
+            return errorResponse(res, 'Appointment detail not found');
+        }
+        // console.log("labReportFile", labReportFile);
+
+        // Update the record
+        const updatedDetail = await appointmentdetailModel.findByIdAndUpdate(
+            appointmentDetail._id,
+            {
+                $set: {
+                    appointmentId,
+                    chiefComplaints,
+                    probableDiagnosis,
+                    prescriptionList,
+                    labInvestigations,
+                    labReports: labReportFile?.['path'],
+                    doctorRemarks,
+                    nextAppointmentDate,
+                    update: new Date()
+                }
+            },
+            { new: true }
+        );
+
+        return successResponse(res, 'Appointment detail updated successfully', updatedDetail);
+
+    } catch (error) {
+        console.error('Error updating appointment detail:', error);
+        return errorResponse(res, 'Error updating appointment detail');
+
+    }
+};
+>>>>>>> 1770808 (last Branch Update)
 
 const checkoutDoctorUpdate = async (req, res) => {
     try {
@@ -1510,6 +1892,11 @@ module.exports = {
     bannerView,
     hospitalLogin,
     hospitalView,
+<<<<<<< HEAD
 }
 
 // doctor pan unavailaba rese tyare mare appointment user ne notify karava na ane update karava na tena sedual
+=======
+    editAppointmentDetailsV2,
+}
+>>>>>>> 1770808 (last Branch Update)

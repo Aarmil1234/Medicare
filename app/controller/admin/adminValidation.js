@@ -1,4 +1,8 @@
 const Joi = require('joi');
+<<<<<<< HEAD
+=======
+const appointment = require('../../model/appointment');
+>>>>>>> 1770808 (last Branch Update)
 
 const addEditAdmin = Joi.object({
     fullName: Joi.string().required().messages({
@@ -42,8 +46,55 @@ const hospitalLogin = Joi.object({
     })
 });
 
+<<<<<<< HEAD
 module.exports = {
     addEditAdmin,
     login,
     hospitalLogin
+=======
+const editAppointmentDetails = Joi.object({
+    appointmentId: Joi.string().required().messages({
+        'any.required': 'Appointment Id is required',
+        'base.string': 'Appointment Id is must be string'
+    }),
+    chiefComplaints: Joi.string().optional().messages({
+        'any.required': 'Chief Complaints is required',
+        'base.string': 'Chief Complaints is must be string'
+    }).allow(null, ""),
+    doctorRemarks: Joi.string().optional().messages({
+        'any.required': 'doctorRemarks is required',
+        'base.string': 'doctorRemarks is must be string'
+    }).allow(null, ""),
+    nextAppointmentDate: Joi.string().optional().messages({
+        'any.required': 'nextAppointmentDate is required',
+        'base.string': 'nextAppointmentDate is must be string'
+    }).allow(null, ""),
+    labInvestigations: Joi.string().optional().messages({
+        'any.required': 'labInvestigations is required',
+        'base.string': 'labInvestigations is must be string'
+    }).allow(null, ""),
+    prescriptionList: Joi.string().optional().messages({
+        'any.required': 'prescriptionList is required',
+        'base.string': 'prescriptionList is must be string'
+    }).allow(null, ""),
+    probableDiagnosis: Joi.string().optional().messages({
+        'any.required': 'probableDiagnosis is required',
+        'base.string': 'probableDiagnosis is must be string'
+    }).allow(null, ""),
+    chiefComplaints: Joi.string().optional().messages({
+        'any.required': 'chiefComplaints is required',
+        'base.string': 'chiefComplaints is must be string'
+    }).allow(null, ""),
+    labReportFile: Joi.string().optional().messages({
+        'any.required': 'labReportFile is required',
+        'base.string': 'labReportFile is must be string'
+    }).allow(null, ""),
+});
+
+module.exports = {
+    addEditAdmin,
+    login,
+    hospitalLogin,
+    editAppointmentDetails
+>>>>>>> 1770808 (last Branch Update)
 };
